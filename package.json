@@ -4,7 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "tape -r babel-register -r ./test/setup-jsdom.js test/*-test.js | faucet"
+    "test": "tape -r babel-register -r ./test/setup-jsdom.js test/*-test.js | faucet",
+    "build-prod": "webpack --config webpack.config.prod.js --progress"
   },
   "keywords": [],
   "author": "",
