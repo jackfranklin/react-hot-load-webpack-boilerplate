@@ -11,10 +11,10 @@ module.exports = {
   },
   output: {
     path: path.join(__dirname, 'dist'),
-    filename: 'javascripts-[hash].js'
+    filename: 'javascripts-[chunkhash].js'
   },
   plugins: [
-    new ExtractTextPlugin('styles-[hash].css'),
+    new ExtractTextPlugin('styles-[chunkhash].css'),
     new webpack.DefinePlugin({
       'process.env': {
         'NODE_ENV': JSON.stringify('production')
@@ -29,7 +29,7 @@ module.exports = {
     new webpack.optimize.DedupePlugin(),
     new webpack.optimize.CommonsChunkPlugin({
       name: 'vendor',
-      filename: 'vendor-[hash].js',
+      filename: 'vendor-[chunkhash].js',
       minChunks: Infinity,
     }),
     new HtmlWebpackPlugin({
