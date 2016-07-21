@@ -5,8 +5,10 @@ var ExtractTextPlugin = require('extract-text-webpack-plugin');
 var HtmlWebpackPlugin = require('html-webpack-plugin');
 
 module.exports = {
-  devtool: 'source-map',
-  entry: './src/index.js',
+  entry: {
+    vendor: ['react', 'react-dom'],
+    app: './src/index.js',
+  },
   output: {
     path: path.join(__dirname, 'dist'),
     filename: 'javascripts-[hash].js'
@@ -25,10 +27,15 @@ module.exports = {
     }),
     new webpack.optimize.OccurenceOrderPlugin(),
     new webpack.optimize.DedupePlugin(),
+    new webpack.optimize.CommonsChunkPlugin({
+      name: 'vendor',
+      filename: 'vendor-[hash].js',
+      minChunks: Infinity,
+    }),
     new HtmlWebpackPlugin({
       template: 'index.template.ejs',
       inject: 'body',
-    })
+    }),
   ],
   module: {
     loaders: [{
