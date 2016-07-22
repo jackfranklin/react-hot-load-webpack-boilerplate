@@ -7,7 +7,6 @@ var HtmlWebpackPlugin = require('html-webpack-plugin');
 module.exports = {
   devtool: 'source-map',
   entry: {
-    vendor: ['react', 'react-dom'],
     app: './src/index.js',
   },
   output: {
@@ -22,20 +21,35 @@ module.exports = {
       }
     }),
     new webpack.optimize.UglifyJsPlugin({
-      compress: {
+      compressor: {
+        screw_ie8: true,
         warnings: false
+      },
+      mangle: {
+        screw_ie8: true
+      },
+      output: {
+        comments: false,
+        screw_ie8: true
       }
     }),
     new webpack.optimize.OccurenceOrderPlugin(),
     new webpack.optimize.DedupePlugin(),
-    new webpack.optimize.CommonsChunkPlugin({
-      name: 'vendor',
-      filename: 'vendor-[chunkhash].js',
-      minChunks: Infinity,
-    }),
     new HtmlWebpackPlugin({
       template: 'index.template.ejs',
       inject: 'body',
+      minify: {
+        removeComments: true,
+        collapseWhitespace: true,
+        removeRedundantAttributes: true,
+        useShortDoctype: true,
+        removeEmptyAttributes: true,
+        removeStyleLinkTypeAttributes: true,
+        keepClosingSlash: true,
+        minifyJS: true,
+        minifyCSS: true,
+        minifyURLs: true
+      }
     }),
   ],
   module: {
